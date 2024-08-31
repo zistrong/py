@@ -5,9 +5,9 @@ import os
 """
      
 """
-ROOT = "f:\\weibo\\tupian\\"
-weiboUid = '2124341'
-COOKIE = "SINAGLOBAL=5820198683991.49"
+ROOT = "/Users/abc/weibo/tupian/"
+weiboUid = '615665462'
+COOKIE = "jsession=xlskdfdf"
 def weiboImg(uid):
     """
     下载微博图片
@@ -89,4 +89,30 @@ def downloadAlbulme(pics: dict, album_id):
 
 
 
-weiboImg(weiboUid)
+
+def queryFans(uid):
+    fans = []
+    page = 1
+    while True:
+        url = "https://weibo.com/ajax/friendships/friends?relate=fans&page={0}&uid={1}&type=all&newFollowerCount=0".format(page, uid)
+        users = getPageContent(url).get('users')
+        if not users:
+            break
+        for user in users:
+            fans.append(user.get('id'))
+        page+=1
+
+    return fans
+
+def queryFollow(uid):
+    follows = []
+    page = 1
+    while True:
+        url ='https://weibo.com/ajax/friendships/friends?uid={0}&page={1}'.format(uid, page)
+        users = getPageContent(url).get('users')
+        if not users:
+            break
+        for user in users:
+            follows.append(user.get('id'))
+        page+=1
+    return follows
