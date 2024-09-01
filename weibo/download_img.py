@@ -5,9 +5,9 @@ import os
 """
      
 """
-ROOT = "/Users/abc/weibo/tupian/"
-weiboUid = '615665462'
-COOKIE = "jsession=xlskdfdf"
+ROOT = "/Users/zistrong/weibo/tupian/"
+weiboUid = '6156565462'
+COOKIE = "XSRF-TOKEN=xE2IeZRrUTwIB4RIK867rq5i; ALF=1727658425; SUB=_2A25L1hzoDeRhGedG4lMR-CfPzjmIHXVoqhAgrDV8PUJbkNAGLVr-kW1NUO-thYpEDBYvTgcEWbQg3_AfeuqpLWay; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWeb-f5RYX4HJdmooGMfAwn5JpX5KzhUgL.Fo2R1K271h.0SK-2dJLoIEXLxK-LBKBLBK.LxK-L1-eLBo5LxKBLB.eLB.eLxK.L1h5L1hqLxKqL1KML1h-t; WBPSESS=9bmT3m6gOoILhbR4p8a1L2tL6Q6KlRgks0Bjt_8G-P7HDGS6P2ekjjZxd3QDRxf6shjSmeMXVCjFNE270Y3p_BU2LZ_t4j9p5iwQeutQKpTBIWcwTlHFyIOPq8trpvgmZlgB6hhEiPmkTiAIPQ7Fdw==; PC_TOKEN=84dcac6818"
 def weiboImg(uid):
     """
     下载微博图片
@@ -116,3 +116,5 @@ def queryFollow(uid):
             follows.append(user.get('id'))
         page+=1
     return follows
+
+print(queryFollow(weiboUid))
