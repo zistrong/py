@@ -1,13 +1,11 @@
 import re
 input = "adventofcode/2023/input/day4.input"
 def subSum(count):
-    if count <0:
-        return 1
-    return pow(2, count)
+    return 1 if count < 0 else pow(2, count)
 
 
 def getNumberList(src: str):
-    return tuple(int(x) for x in re.compile('\\d+').findall(src))
+    return map(int, re.compile('\\d+').findall(src))
 
 def part1():
     with open(input) as file:

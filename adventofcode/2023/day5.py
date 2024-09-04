@@ -1,3 +1,4 @@
+import threading
 class Node:
     def __init__(self) -> None:
         pass
@@ -27,7 +28,7 @@ def getSeed(seed: int, list) :
     return seed
 
 def getSeedsList(src: str):
-    return (int(x) for x in src.strip().replace('seeds: ', '').split(' '))
+    return map(int, src.strip().replace('seeds: ', '').split(' '))
 
 def init():
     with open(input) as file:
@@ -55,4 +56,24 @@ def part1():
         minLocation = getMinLocation(seed, minLocation, lists)
     print(minLocation)
 
-part1()
+def part2():
+    r = init()
+    map = {}
+    seeds = list(r[1])
+    threads = []
+    for i in range(int(len(seeds)/2)):
+        t = threading.Thread(target=task, args=(i, seeds, r, map))
+        threads.append(t)
+        t.start() 
+        
+    for t in threads:
+        t.join()
+    print(min(map.values()))
+
+def task(ii, seeds, r, map):
+    min = 9999999999999999999
+    for j in range(seeds[ii], seeds[ii]+seeds[ii+1]):
+        min = getMinLocation(j, min, r[0])
+        map[ii]=min
+
+part2()
