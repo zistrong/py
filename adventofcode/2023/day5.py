@@ -64,8 +64,8 @@ def part2():
     for i in range(0,len(seeds),2):
         t = threading.Thread(target=task, args=(i, seeds, r, map))
         threads.append(t)
-    for thread in threads:
-        thread.start()
+        t.start()
+    
     for t in threads:
         t.join()
     print(min(map.values()))
@@ -74,6 +74,6 @@ def task(ii, seeds, r, map):
     min = 9999999999999999999
     for j in range(seeds[ii], seeds[ii]+seeds[ii+1]):
         min = getMinLocation(j, min, r[0])
-        map[ii]=min
+    map[ii]=min
 
 part2()
