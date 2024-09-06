@@ -95,9 +95,9 @@ class Node():
                 current = self.originalLabel[i]
                 other = o.originalLabel[i]
                 if self.part == 2:
-                    if current == ord(CHAR_J) and other != ord(CHAR_J):
+                    if current == (CHAR_J) and other != (CHAR_J):
                         return -1
-                    if current != ord(CHAR_J) and other == ord(CHAR_J):
+                    if current != (CHAR_J) and other == (CHAR_J):
                         return 1
                 if current.isdigit() and not other.isdigit():
                     return -1
@@ -113,7 +113,6 @@ class Node():
                     if k == 0:
                         continue
                     return k
-            return 0
         else:
             return self.type - o.type
     def __repr__(self):
@@ -149,5 +148,6 @@ def part2():
             sum +=(i * node.strength)
             i+=1
         print(sum)
-
+        
+part1()
 part2()
