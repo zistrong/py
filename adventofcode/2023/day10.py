@@ -103,12 +103,12 @@ def getMaxPath(startNode: Node):
 
 def part1():
     init()
-    print(sNode)
     maxStep = getMaxPath(sNode)
     print(maxStep//2)
 
 
 def part2():
+    part1()
     if (sNode.x > 0 and sNode.y < len(nodeList[sNode.x]) - 1
                 and nodeList[sNode.x - 1][sNode.y].s
                 and nodeList[sNode.x][sNode.y + 1].w) :
@@ -130,12 +130,8 @@ def part2():
                         c +=1
                     x -=1
                     y -=1
-                if c % 1 :
+                if c % 2:
                     count+=1
     print(count)
-                        
-        
-
-
-part1()
+#part1()
 part2()
