@@ -61,11 +61,11 @@ def part2():
     map = {}
     seeds = list(r[1])
     threads = []
-    for i in range(int(len(seeds)/2)):
+    for i in range(0,len(seeds),2):
         t = threading.Thread(target=task, args=(i, seeds, r, map))
         threads.append(t)
-        t.start() 
-        
+    for thread in threads:
+        thread.start()
     for t in threads:
         t.join()
     print(min(map.values()))
