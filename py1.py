@@ -1,3 +1,5 @@
+from abc import ABCMeta, abstractmethod
+
 l=['a','b','c']
 print(l);
 print(l[0])
@@ -6,6 +8,11 @@ print(l)
 l.pop();
 
 print(l);
+
+
+
+
+
 #commit
 ll=[l[i] for i in [2,1,0] ]
 #print(next(ll));
@@ -28,8 +35,7 @@ print(flag)
 
 meta=(1,2,3,4,5,5,7);
 
-data=open('D:\\workspace-ln\\lm\\target\\classes\com\\sinovatech\\unicom\\web\\TWlmLoginController.class','rb');
-data
+
 
 #define class
 class User:
@@ -43,3 +49,22 @@ class User:
 
 
 
+
+
+
+
+class Super(metaclass= ABCMeta):
+  """抽象超类"""
+  @abstractmethod
+  def method(self):
+    pass
+
+class Sub1(Super):
+  pass
+
+class Sub(Super):
+  def method(self):
+     super().method()
+
+
+#sub =  Sub1() 运行错误
