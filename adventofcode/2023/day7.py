@@ -44,7 +44,7 @@ class Node():
 
 
     def isFiveOfKind(self):
-        return len(set(self.label)) == 1
+        return self.label.count(self.label[0]) == len(self.label)
     def isFourKind(self):
         return len(list(filter(lambda x: x == self.label[0], self.label))) == 4 or len(list(filter(lambda x: x == self.label[1:2], self.label))) == 4
     def isFullHouse(self):
@@ -121,16 +121,14 @@ def part1():
     with open(input) as file:
         nodeList = []
         for line in file:
-            s = line.strip().split(' ')
+            s = line.strip().split()
             node = Node(s[0], int(s[1]), 1)
             nodeList.append(node)
         sum = 0
         i = 1
         nodeList = sorted(nodeList)
-        for node in nodeList:
-            sum +=(i * node.strength)
-            i+=1
-        
+        for i in range(len(nodeList)):
+            sum +=(i * nodeList[i].strength)       
         print(sum)
 
 
@@ -138,15 +136,14 @@ def part2():
     with open(input) as file:
         nodeList = []
         for line in file:
-            s = line.strip().split(' ')
+            s = line.strip().split()
             node = Node(s[0], int(s[1]), 2)
             nodeList.append(node)
         sum = 0
         i = 1
         nodeList = sorted(nodeList)
-        for node in nodeList:
-            sum +=(i * node.strength)
-            i+=1
+        for i in range(len(nodeList)):
+            sum +=(i * nodeList[i].strength)       
         print(sum)
         
 part1()
