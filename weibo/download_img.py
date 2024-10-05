@@ -1,13 +1,14 @@
 import requests
 import random
+import json
 import os
 
 """
      
 """
 ROOT = "/Users/zistrong/weibo/tupian/"
-weiboUid = '6156565462'
-COOKIE = "XSRF-TOKEN=xE2IeZRrUTwIB4RIK867rq5i; ALF=1727658425; SUB=_2A25L1hzoDeRhGedG4lMR-CfPzjmIHXVoqhAgrDV8PUJbkNAGLVr-kW1NUO-thYpEDBYvTgcEWbQg3_AfeuqpLWay; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWeb-f5RYX4HJdmooGMfAwn5JpX5KzhUgL.Fo2R1K271h.0SK-2dJLoIEXLxK-LBKBLBK.LxK-L1-eLBo5LxKBLB.eLB.eLxK.L1h5L1hqLxKqL1KML1h-t; WBPSESS=9bmT3m6gOoILhbR4p8a1L2tL6Q6KlRgks0Bjt_8G-P7HDGS6P2ekjjZxd3QDRxf6shjSmeMXVCjFNE270Y3p_BU2LZ_t4j9p5iwQeutQKpTBIWcwTlHFyIOPq8trpvgmZlgB6hhEiPmkTiAIPQ7Fdw==; PC_TOKEN=84dcac6818"
+weiboUid = '1170153947'
+COOKIE = ''
 def weiboImg(uid):
     """
     下载微博图片
@@ -67,6 +68,13 @@ def getRawData(url, header={'Cookie': COOKIE}):
     req =  requests.get(url, headers= header)
     return req.content if req.status_code == 200 else None
 
+def postData(url, payload, header= {'Cookie': COOKIE, 'X-Xsrf-Token': 'n7PPdgvzpeaPLjxvvN4BM_E4'}):
+    req = requests.post(url, payload,headers=header)
+    return req.content if req.status_code == 200 else None
+
+def postData1(url, data, header= {'Cookie': COOKIE, 'X-Xsrf-Token': 'n7PPdgvzpeaPLjxvvN4BM_E4'}):
+    req = requests.post(url, data=data ,headers=header)
+    return req.content if req.status_code == 200 else None
 def getData(json):
     return json.get('data')
 
@@ -89,7 +97,6 @@ def downloadAlbulme(pics: dict, album_id):
 
 
 
-
 def queryFans(uid):
     fans = []
     page = 1
@@ -109,6 +116,7 @@ def queryFollow(uid):
     page = 1
     while True:
         url ='https://weibo.com/ajax/friendships/friends?uid={0}&page={1}'.format(uid, page)
+        getData
         users = getPageContent(url).get('users')
         if not users:
             break
@@ -116,5 +124,39 @@ def queryFollow(uid):
             follows.append(user.get('id'))
         page+=1
     return follows
+def getBlogs(uid):
+    blogs = []
+    page = 1
+    url = f"https://weibo.com/ajax/statuses/mymblog?uid={uid}&page=1&feature=0"
+    weibos = getData(getPageContent(url)).get('list')
+    if not weibos:
+        return []
+    for b in weibos:
+        blogs.append(b.get('id'))
+    return blogs
 
-print(queryFollow(weiboUid))
+def setLike(blogIds: list):
+    url = 'https://weibo.com/ajax/statuses/setLike'
+    for blogId in blogIds:
+        postData(url, {'id': str(blogId)})
+
+def cancelLike(blogIds: list):
+    url = 'https://weibo.com/ajax/statuses/cancelLike'
+    for blogId in blogIds:
+        postData(url, {'id': str(blogId)})
+def comment(blogIds, comment):
+    for blogId in blogIds:
+        data = {}
+        data['id'] = blogId
+        data['comment'] = comment
+        url = f"https://weibo.com/ajax/comments/create"
+        postData1(url, data=data)
+
+#print(comment([5040542146363884],'你好呀, I am zistrong, https://weibo.com/u/5819214161'))
+
+
+def allLike():
+    allblogs = getBlogs(weiboUid)
+    setLike(allblogs)
+
+allLike()
